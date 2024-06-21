@@ -19,20 +19,22 @@ password_email = os.getenv("PASSWORD")
 
 
 # The function that will send the email
-def send_email(subject, receiver_email, name):
+def send_email(subject, receiver_email, name, due_date, invoice_no, amount):
     msg = EmailMessage()
     msg["Subject"] = subject
-    msg["From"] = formataddr(("Coding Corp.", f"{sender_email}"))
+    msg["From"] = formataddr((" TeamSystem ", f"{sender_email}"))
     msg["To"] = receiver_email
     msg["BCC"] = sender_email
 
     msg.set_content(
         f"""\
-        Hi {name},
-        This is a test email.
-        I just want to test the script!
+        Hello {name},
+        I hope you are well.
+        I just wanted to kindly remind you that {amount}$ in respect of our
+        invoice {invoice_no} is due for payment on {due_date}.
+        I would be really grateful if you confirm that everything is on track for payment.
         Best regards
-        Xhesjano Halla
+        Xhesjano Halla 
         """
     )
 
@@ -43,10 +45,12 @@ def send_email(subject, receiver_email, name):
         f"""\
         <html>
             <body>
-                <p>Hi {name}</p>
-                <p>This is a test email.</p>
-                <p>I just want to test the script!</p>
-                <p>Best regards</p>
+                <p> Hi {name} </p>
+                <p> I hope you are well. </p>
+                <p>  I just wanted to kindly remind you that <strong>{amount}$</strong> in respect of our</p>
+                <p> invoice {invoice_no} is due for payment on {due_date}. </p>
+                <p> I would be really grateful if you confirm that everything is on track for payment. </p>
+                <p> Best regards </p>
                 <strong>Xhesjano Halla</strong>
             </body>
         </html>
@@ -64,9 +68,3 @@ def send_email(subject, receiver_email, name):
         print(f"Failed to send email: {e}")
 
 
-if __name__ == "__main__":
-    send_email(
-        subject="Subject Testing",
-        name="Testing Test",
-        receiver_email="orgestbitri@gmail.com",
-    )
